@@ -11,16 +11,20 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
+import os
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+load_dotenv(BASE_DIR / '.env')
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-3+5n3h3rn43)&g$8y)cam_wlr1_4%fg6#$=&x@*ydo)^*fp)+p'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -77,7 +81,7 @@ WSGI_APPLICATION = 'gbenga_portfolio.wsgi.application'
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 import dj_database_url
 
-DATABASE_URL = "postgres://gbenga:passnownow@localhost/portfolio_db"
+DATABASE_URL = os.environ.get("DATABASE_URL")
 
 DATABASES = {
     'default': dj_database_url.config(
