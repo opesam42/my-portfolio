@@ -49,6 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware'
 ]
 
 ROOT_URLCONF = 'gbenga_portfolio.urls'
@@ -127,6 +128,13 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Media files (User-uploaded content like project screenshots)
 MEDIA_URL = 'media/'
+
+# whitenoise config
+STORAGES = {
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 
 
 # MY DATA
