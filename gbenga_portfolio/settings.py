@@ -27,9 +27,17 @@ load_dotenv(BASE_DIR / '.env')
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+if DEBUG:
+    ALLOWED_HOSTS = ['*']
+else:
+    # In production, list your specific domains
+    ALLOWED_HOSTS = [
+        'gbenga.koyeb.app',
+        '127.0.0.1',
+        'localhost',
+    ]
 
 
 # Application definition
