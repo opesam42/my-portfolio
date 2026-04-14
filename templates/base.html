@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}Your Name — Backend Developer{% endblock %}</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="{% static 'favicons/favicon.ico' %}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicons/favicon-32x32.png' %}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicons/favicon-16x16.png' %}">
+  <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicons/apple-touch-icon.png' %}">
+  <link rel="manifest" href="{% static 'favicons/site.webmanifest' %}">
+
+  <link rel="stylesheet" href="{% static 'css/output.css' %}" />
+  {% block extra_head %}{% endblock %}
+</head>
+<body class="bg-white text-gray-800 antialiased">
+
+  <!-- Navbar -->
+  <nav class="max-w-2xl mx-auto px-6 py-5 flex items-center justify-between">
+    <a href="{% url 'core:home' %}">
+      <img
+        src="{% static 'images/gbenga_profile_image.webp' %}"
+        alt="Gbenga Opeyemi"
+        class="w-12 h-12 rounded-full object-cover object-top"
+      />
+    </a>
+    <div class="flex items-center gap-6 text-sm text-gray-600">
+      <a href="#projects" class="hover:text-gray-900 transition-colors">Projects</a>
+      <a href="#blog" class="hover:text-gray-900 transition-colors">Blog</a>
+      <a href="#contact" class="hover:text-gray-900 transition-colors">Contact</a>
+    </div>
+  </nav>
+
+  <main class="max-w-2xl mx-auto px-6 pb-16">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="text-center text-sm text-gray-400 py-8">
+    &copy; {% now "Y" %} {{MY_NAME}}. All rights reserved.
+  </footer>
+
+</body>
+</html>

@@ -56,13 +56,14 @@ ROOT_URLCONF = 'gbenga_portfolio.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'core.context_processors.branding',
             ],
         },
     },
@@ -119,6 +120,23 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/6.0/howto/static-files/
-
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [BASE_DIR / 'static']
+# This is where Django will 'collect' files for production (don't worry about it yet)
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# Media files (User-uploaded content like project screenshots)
+MEDIA_URL = 'media/'
+
+
+# MY DATA
+# Personal Branding
+MY_NAME = "Gbenga Opeyemi"
+MY_TAGLINE = "Backend Engineer & Tech Philosopher"
+WHATSAPP_LINK = "https://wa.me/2349057339147."
+EMAIL_ADDRESS = "opesam42@gmail.com"
+GITHUB_URL = "https://github.com/opesam42"
+LINKEDIN_URL = "https://linkedin.com/in/opeyemi-oluwagbemiga-2ba61423b"
+DEV_TO_URL = "https://dev.to/opeyemi_oluwagbemiga_a213"
+X_URL = "https://x.com/gbengaopeyemi04"
+MEDIUM_URL = "https://medium.com/@opesam42"

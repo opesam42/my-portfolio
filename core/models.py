@@ -36,7 +36,7 @@ class Project(TimeStampedModel):
         help_text="Link to a blog post explaining the technical details"
     )
     
-    cover_image = models.ImageField(upload_to='projects/')
+    cover_image = models.ImageField(upload_to='projects/', blank=True)
 
     def __str__(self):
         return self.name
@@ -46,7 +46,7 @@ class Article(TimeStampedModel):
     description = models.TextField()
     external_url = models.URLField(help_text="Link to the actual article")
     platform_name = models.CharField(max_length=50,)
-    cover_image = models.ImageField(upload_to='articles/')
+    cover_image = models.ImageField(upload_to='articles/', blank=True)
 
     def __str__(self):
         return self.title
