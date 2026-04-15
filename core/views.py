@@ -14,3 +14,6 @@ class HomeView(TemplateView):
         context['articles'] = Article.objects.filter(is_visible=True).order_by('-date_added')
         
         return context
+    
+def custom_404(request, exception):
+    return render(request, '404.html', status=404)
