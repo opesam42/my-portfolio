@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
+from django.http import HttpResponse
 from .models import Project, Article
 
 class HomeView(TemplateView):
@@ -17,3 +18,10 @@ class HomeView(TemplateView):
     
 def custom_404(request, exception):
     return render(request, '404.html', status=404)
+
+
+
+def google_verification(request):
+    # Copy the filename from your image exactly
+    content = "google-site-verification: google9e1a13e84d1227be.html" 
+    return HttpResponse(content, content_type="text/html")
