@@ -12,7 +12,11 @@
         👋 Hi, I'm <br />{{MY_NAME}}
       </h1>
       <p class="text-xs text-gray-400 tracking-wide mb-4">
-        Backend Developer · Freelance Web Developer
+        Backend Developer · 
+        <a href="{% url 'core:freelance' %}" 
+          class="hover:text-gray-600 transition-colors underline underline-offset-2">
+          Freelance Web Developer
+        </a>
       </p>
       <p class="text-sm text-gray-500 leading-relaxed max-w-xs">
         I build the systems that power web products from APIs, databases, and server-side logic. Based in Nigeria, I also help local businesses get online with clean, functional websites that convert visitors to customers.
@@ -272,8 +276,12 @@
     <h2 class="text-2xl font-bold text-center text-gray-900 mb-2">Get in touch</h2>
     <p class="text-center text-gray-500 text-sm mb-10">
       Got a project you need built, a role, or just want to talk backend?
-      I'm available for freelance work and open to full-time opportunities.
-      WhatsApp is the fastest way to reach me.
+      I'm available for 
+      <a href="{% url 'core:freelance' %}" 
+        class="hover:text-gray-600 transition-colors underline underline-offset-2">
+        freelance work
+      </a> 
+      and open to full-time opportunities.
     </p>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
