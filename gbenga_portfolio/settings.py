@@ -35,6 +35,7 @@ else:
     # In production, list your specific domains
     ALLOWED_HOSTS = [
         'gbenga.koyeb.app',
+        'gbengaopeyemi.vercel.app',
         '127.0.0.1',
         'localhost',
     ]
