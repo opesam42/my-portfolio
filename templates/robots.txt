@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://gbenga.koyeb.app/sitemap.xml
+Sitemap: https://gbengaopeyemi.vercel.app/sitemap.xml
