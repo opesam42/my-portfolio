@@ -26,7 +26,6 @@ def custom_404(request, exception):
 
 
 
-def google_verification(request):
-    # Copy the filename from your image exactly
-    content = "google-site-verification: google9e1a13e84d1227be.html" 
-    return HttpResponse(content, content_type="text/html")
+# def google_verification(request):
+#     content = "google-site-verification: google9e1a13e84d1227be.html" 
+#     return HttpResponse(content, content_type="text/html")
