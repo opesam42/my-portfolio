@@ -19,6 +19,10 @@ class HomeView(TemplateView):
 
 class FreelanceView(TemplateView):
     template_name = "freelance.html"
+
+
+class MaintenanceView(TemplateView):
+    template_name = "maintenance.html"
     
     
 def custom_404(request, exception):
