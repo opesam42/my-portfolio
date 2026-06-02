@@ -1,8 +1,8 @@
 from django.shortcuts import reverse, redirect
-from django.conf import settings
 from django.db import connections
 from django.db.utils import OperationalError
 from django.core.cache import cache
+from .services import send_downtime_alert
 
 class MaintenanceModeMiddleware:
 
@@ -12,18 +12,22 @@ class MaintenanceModeMiddleware:
 
     def __call__(self, request):
         path = request.META.get('PATH_INFO', "")
-        
+
         # Skip check for maintenance page itself
         if path == reverse("core:maintenance"):
             return self.get_response(request)
-        
+
         # Check database connectivity
         db_available = self._check_database()
 
         if not db_available:
             return redirect(reverse("core:maintenance"))
-            
-        return self.get_response(request)
+
+        try:
+            return self.get_response(request)
+        except OperationalError:
+            # DB dropped mid-request (e.g. SSL connection closed during rendering)
+            return redirect(reverse("core:maintenance"))
     
     def _check_database(self):
         db_status = cache.get("db_health")
@@ -31,11 +35,22 @@ class MaintenanceModeMiddleware:
         if db_status is not None:
             return db_status
         
-        # Cache Miss
+
+        # Cache Miss — use a real query, not just ensure_connection(), to catch dropped SSL connections
         try:
-            connections['default'].ensure_connection()
-            cache.set("db_health", True, timeout=30) # timeout 30 seconds
+            conn = connections['default']
+            conn.ensure_connection()
+            with conn.cursor() as cursor:
+                cursor.execute("SELECT 1")
+            cache.set("db_health", True, timeout=30)
             return True
         except OperationalError:
             cache.set("db_health", False, timeout=10) # timeoout = 10s if the db is not available 
+
+            # send alert 
+            alert_already_sent = cache.get("db_downtime_alert_sent")
+            if not alert_already_sent:
+                send_downtime_alert()
+                cache.set("db_downtime_alert_sent", True, timeout=1800) # 30 mins
+
             return False

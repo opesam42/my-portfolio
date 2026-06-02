@@ -164,3 +164,14 @@ LINKEDIN_URL = "https://linkedin.com/in/opeyemi-oluwagbemiga-2ba61423b"
 DEV_TO_URL = "https://dev.to/opeyemi_oluwagbemiga_a213"
 X_URL = "https://x.com/gbengaopeyemi04"
 MEDIUM_URL = "https://medium.com/@opesam42"
+
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = EMAIL_ADDRESS
+EMAIL_HOST_PASSWORD = os.environ.get("GMAIL_APP_PASSWORD")
+DEFAULT_FROM_EMAIL = EMAIL_ADDRESS
+ADMIN_EMAIL = EMAIL_ADDRESS

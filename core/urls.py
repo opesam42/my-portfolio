@@ -11,5 +11,5 @@ urlpatterns=[
     path('maintenance/', views.MaintenanceView.as_view(), name='maintenance'),
     path('google9e1a13e84d1227be.html', views.google_verification),
     path('sitemap.xml', TemplateView.as_view(template_name='sitemap.xml', content_type='text/xml')),
-    path('robots.txt', TemplateView.as_view(template_name='robots.txt', content_type='text/plain')),
+    path('robots.txt', TemplateView.as_view(template_name='robots.txt', content_type='text/plain'))
 ]
