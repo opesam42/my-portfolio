@@ -157,9 +157,9 @@
     <h2 class="text-2xl font-bold text-center text-gray-900 mb-2">Projects</h2>
     <p class="text-center text-gray-500 text-sm mb-10">A selection of projects and systems exploring software architecture, performance, and technical problem-solving.</p>
 
-    <div class="flex flex-col gap-4">
+    <div class="flex flex-col gap-4" id="projects-list">
       {% for project in projects %}
-      <div class="border border-gray-200 rounded-lg overflow-hidden">
+      <div class="border border-gray-200 rounded-lg overflow-hidden project-item">
 
         {% if project.cover_image %}
         <img src="{{ project.cover_image.url }}" alt="{{ project.name }} cover"
@@ -228,6 +228,18 @@
       <p class="text-center text-gray-400 text-sm">No projects yet.</p>
       {% endfor %}
     </div>
+
+    <div class="flex items-center justify-between mt-10" id="projects-pagination" style="display:none;">
+      <button id="projects-prev" type="button"
+        class="text-sm font-medium px-5 py-2.5 border border-gray-300 rounded-full text-gray-700 hover:bg-gray-50 hover:text-gray-900 disabled:opacity-40 disabled:cursor-not-allowed transition-colors">
+        Prev
+      </button>
+      <span id="projects-page-indicator" class="text-sm text-gray-500 font-medium"></span>
+      <button id="projects-next" type="button"
+        class="text-sm font-medium px-5 py-2.5 border border-gray-300 rounded-full text-gray-700 hover:bg-gray-50 hover:text-gray-900 disabled:opacity-40 disabled:cursor-not-allowed transition-colors">
+        Next
+      </button>
+    </div>
   </section>
 
   <!-- ──────────────────────────── BLOG ────────────────────────────── -->
@@ -235,9 +247,9 @@
     <h2 class="text-2xl font-bold text-center text-gray-900 mb-2">Blog</h2>
     <p class="text-center text-gray-500 text-sm mb-10">Technical writing and deep dives into software engineering concepts, trade-offs, and implementation details.</p>
 
-    <div class="flex flex-col gap-10">
+    <div class="flex flex-col gap-10" id="articles-list">
       {% for article in articles %}
-      <article>
+      <article class="article-item">
 
         {% if article.cover_image %}
         <a href="{{ article.external_url }}" target="_blank" rel="noopener noreferrer">
@@ -268,6 +280,18 @@
       {% empty %}
       <p class="text-center text-gray-400 text-sm">No articles yet.</p>
       {% endfor %}
+    </div>
+
+    <div class="flex items-center justify-between mt-10" id="articles-pagination" style="display:none;">
+      <button id="articles-prev" type="button"
+        class="text-sm font-medium px-5 py-2.5 border border-gray-300 rounded-full text-gray-700 hover:bg-gray-50 hover:text-gray-900 disabled:opacity-40 disabled:cursor-not-allowed transition-colors">
+        Prev
+      </button>
+      <span id="articles-page-indicator" class="text-sm text-gray-500 font-medium"></span>
+      <button id="articles-next" type="button"
+        class="text-sm font-medium px-5 py-2.5 border border-gray-300 rounded-full text-gray-700 hover:bg-gray-50 hover:text-gray-900 disabled:opacity-40 disabled:cursor-not-allowed transition-colors">
+        Next
+      </button>
     </div>
   </section>
 
@@ -346,4 +370,73 @@
     </div>
   </section>
 
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  function setupPagination({ listId, itemSelector, prevId, nextId, indicatorId, paginationId, pageSize }) {
+    const list = document.getElementById(listId);
+    if (!list) return;
+
+    const items = Array.from(list.querySelectorAll(itemSelector));
+    if (items.length <= pageSize) return; // nothing to paginate
+
+    const prevBtn = document.getElementById(prevId);
+    const nextBtn = document.getElementById(nextId);
+    const indicator = document.getElementById(indicatorId);
+    const pagination = document.getElementById(paginationId);
+    const totalPages = Math.ceil(items.length / pageSize);
+    let currentPage = 0;
+
+    function render() {
+      const start = currentPage * pageSize;
+      const end = start + pageSize;
+      items.forEach((item, i) => {
+        item.style.display = (i >= start && i < end) ? "" : "none";
+      });
+      indicator.textContent = `Page ${currentPage + 1} of ${totalPages}`;
+      prevBtn.disabled = currentPage === 0;
+      nextBtn.disabled = currentPage === totalPages - 1;
+    }
+
+    prevBtn.addEventListener("click", () => {
+      if (currentPage > 0) {
+        currentPage -= 1;
+        render();
+      }
+    });
+
+    nextBtn.addEventListener("click", () => {
+      if (currentPage < totalPages - 1) {
+        currentPage += 1;
+        render();
+      }
+    });
+
+    pagination.style.display = "flex";
+    render();
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    setupPagination({
+      listId: "projects-list",
+      itemSelector: ".project-item",
+      prevId: "projects-prev",
+      nextId: "projects-next",
+      indicatorId: "projects-page-indicator",
+      paginationId: "projects-pagination",
+      pageSize: 3,
+    });
+
+    setupPagination({
+      listId: "articles-list",
+      itemSelector: ".article-item",
+      prevId: "articles-prev",
+      nextId: "articles-next",
+      indicatorId: "articles-page-indicator",
+      paginationId: "articles-pagination",
+      pageSize: 3,
+    });
+  });
+</script>
 {% endblock %}

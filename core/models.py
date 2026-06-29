@@ -37,6 +37,7 @@ class Project(TimeStampedModel):
     )
     
     cover_image = models.ImageField(upload_to='projects/', blank=True)
+    order = models.PositiveIntegerField(default=0, db_index=True)
 
     def __str__(self):
         return self.name
@@ -47,6 +48,7 @@ class Article(TimeStampedModel):
     external_url = models.URLField(help_text="Link to the actual article")
     platform_name = models.CharField(max_length=50,)
     cover_image = models.ImageField(upload_to='articles/', blank=True)
+    order = models.PositiveIntegerField(default=0, db_index=True)
 
     def __str__(self):
         return self.title

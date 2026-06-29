@@ -11,8 +11,8 @@ class HomeView(TemplateView):
         context = super().get_context_data(**kwargs)
         
         # Add your backend data
-        context['projects'] = Project.objects.filter(is_visible=True).order_by('-date_added')
-        context['articles'] = Article.objects.filter(is_visible=True).order_by('-date_added')
+        context['projects'] = Project.objects.filter(is_visible=True).order_by('order')
+        context['articles'] = Article.objects.filter(is_visible=True).order_by('order')
         
         return context
 
