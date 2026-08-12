@@ -23,6 +23,11 @@ class FreelanceView(TemplateView):
 
 class MaintenanceView(TemplateView):
     template_name = "maintenance.html"
+
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        # Returns the view with a 503 Service Unavailable status code
+        return self.render_to_response(context, status=503)
     
     
 def custom_404(request, exception):

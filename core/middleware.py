@@ -12,13 +12,16 @@ class MaintenanceModeMiddleware:
 
     def __call__(self, request):
         path = request.META.get('PATH_INFO', "")
-
-        # Skip check for maintenance page itself
-        if path == reverse("core:maintenance"):
-            return self.get_response(request)
+        maintenance_path = reverse("core:maintenance")
 
         # Check database connectivity
         db_available = self._check_database()
+
+        # when a user try to access maintenance page directly, they get routed to the homepage
+        if path == maintenance_path:
+            if db_available:
+                return redirect(reverse("core:home"))
+            return self.get_response(request)
 
         if not db_available:
             return redirect(reverse("core:maintenance"))
@@ -27,7 +30,7 @@ class MaintenanceModeMiddleware:
             return self.get_response(request)
         except OperationalError:
             # DB dropped mid-request (e.g. SSL connection closed during rendering)
-            return redirect(reverse("core:maintenance"))
+            return redirect(maintenance_path)
     
     def _check_database(self):
         db_status = cache.get("db_health")
