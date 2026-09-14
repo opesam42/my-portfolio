@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Projects — {{ MY_NAME }}{% endblock %}
+{% block canonical %}https://gbengaopeyemi.vercel.app/projects/{% endblock %}
+
+{% block content %}
+
+  <section class="pt-4">
+    <h1 class="text-3xl font-bold text-gray-900 mb-2">Projects</h1>
+    <p class="text-sm text-gray-500 leading-relaxed mb-10">
+      A selection of projects and systems exploring software architecture, performance, and technical problem-solving.
+    </p>
+
+    <div class="flex flex-col gap-10">
+      {% for project in projects %}
+      <article>
+        <h2 class="font-semibold text-gray-900 text-lg mb-2">{{ project.name }}</h2>
+        <p class="text-sm text-gray-600 leading-relaxed mb-3">{{ project.description }}</p>
+
+        <p class="text-sm text-gray-500 flex flex-wrap gap-x-4 gap-y-1">
+          {% if project.github_url %}
+          <a href="{{ project.github_url }}" target="_blank" rel="noopener noreferrer"
+             class="hover:text-gray-900 transition-colors">GitHub</a>
+          {% endif %}
+          {% if project.demo_url %}
+          <a href="{{ project.demo_url }}" target="_blank" rel="noopener noreferrer"
+             class="hover:text-gray-900 transition-colors">Live demo</a>
+          {% endif %}
+          {% if project.writeup_url %}
+          <a href="{{ project.writeup_url }}" target="_blank" rel="noopener noreferrer"
+             class="hover:text-gray-900 transition-colors">Writeup</a>
+          {% endif %}
+        </p>
+      </article>
+      {% empty %}
+      <p class="text-sm text-gray-400">No projects yet.</p>
+      {% endfor %}
+    </div>
+  </section>
+
+{% endblock %}

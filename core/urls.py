@@ -7,6 +7,8 @@ app_name = 'core'
 
 urlpatterns=[
     path('', views.HomeView.as_view(), name='home'),
+    path('projects/', views.ProjectsView.as_view(), name='projects'),
+    path('blog/', views.BlogView.as_view(), name='blog'),
     path('freelance/', views.FreelanceView.as_view(), name='freelance'),
     path('maintenance/', views.MaintenanceView.as_view(), name='maintenance'),
     path('google9e1a13e84d1227be.html', views.google_verification),

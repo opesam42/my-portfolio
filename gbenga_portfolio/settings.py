@@ -156,7 +156,7 @@ STORAGES = {
 # MY DATA
 # Personal Branding
 MY_NAME = "Gbenga Opeyemi"
-MY_TAGLINE = "Backend Engineer & Tech Philosopher"
+MY_TAGLINE = "Backend Developer · Freelance Web Developer"
 WHATSAPP_LINK = "https://wa.me/2349057339147"
 EMAIL_ADDRESS = "opesam42@gmail.com"
 GITHUB_URL = "https://github.com/opesam42"

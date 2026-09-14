@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Blog — {{ MY_NAME }}{% endblock %}
+{% block canonical %}https://gbengaopeyemi.vercel.app/blog/{% endblock %}
+
+{% block content %}
+
+  {# TODO: replace date_added with a dedicated published_at field when articles should show the real post date, not the admin-created date. #}
+
+  <section class="pt-4">
+    <h1 class="text-3xl font-bold text-gray-900 mb-2">Blog</h1>
+    <p class="text-sm text-gray-500 leading-relaxed mb-10">
+      Technical writing and deep dives into software engineering concepts, trade-offs, and implementation details.
+    </p>
+
+    {% regroup articles by date_added.year as articles_by_year %}
+
+    {% for year_group in articles_by_year %}
+    <section class="mb-10">
+      <h2 class="text-xl font-bold text-gray-900 mb-4">{{ year_group.grouper }}</h2>
+      <ul class="flex flex-col gap-3">
+        {% for article in year_group.list %}
+        <li class="text-sm leading-relaxed">
+          <a href="{{ article.external_url }}" target="_blank" rel="noopener noreferrer"
+             class="text-gray-900 hover:text-gray-600 transition-colors">
+            {{ article.title }}
+          </a>
+          <span class="text-gray-400">
+            · {{ article.platform_name }}
+            · {{ article.date_added|date:"M j, Y" }}
+          </span>
+        </li>
+        {% endfor %}
+      </ul>
+    </section>
+    {% empty %}
+    <p class="text-sm text-gray-400">No articles yet.</p>
+    {% endfor %}
+  </section>
+
+{% endblock %}

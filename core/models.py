@@ -43,6 +43,8 @@ class Project(TimeStampedModel):
         return self.name
 
 class Article(TimeStampedModel):
+    # TODO: add published_at (the date the post went live on Medium/dev.to)
+    # and use it on /blog/ instead of date_added.
     title = models.CharField(max_length=255)
     description = models.TextField()
     external_url = models.URLField(help_text="Link to the actual article")
