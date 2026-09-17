@@ -6,30 +6,26 @@
 
 {% block content %}
 
-  {# TODO: replace date_added with a dedicated published_at field when articles should show the real post date, not the admin-created date. #}
-
   <section class="pt-4">
-    <h1 class="text-3xl font-bold text-gray-900 mb-2">Blog</h1>
-    <p class="text-sm text-gray-500 leading-relaxed mb-10">
-      Technical writing and deep dives into software engineering concepts, trade-offs, and implementation details.
-    </p>
+    <h1 class="text-3xl font-bold text-gray-900 mb-8">All Posts</h1>
 
-    {% regroup articles by date_added.year as articles_by_year %}
+    {% regroup articles by published_year as articles_by_year %}
 
     {% for year_group in articles_by_year %}
-    <section class="mb-10">
-      <h2 class="text-xl font-bold text-gray-900 mb-4">{{ year_group.grouper }}</h2>
-      <ul class="flex flex-col gap-3">
+    <section class="mb-8">
+      <h2 class="text-xl font-bold text-gray-900 mb-3">
+        {% if year_group.grouper %}{{ year_group.grouper }}{% else %}Undated{% endif %}
+      </h2>
+      <ul class="flex flex-col gap-1.5">
         {% for article in year_group.list %}
-        <li class="text-sm leading-relaxed">
+        <li class="text-sm leading-relaxed text-gray-800">
           <a href="{{ article.external_url }}" target="_blank" rel="noopener noreferrer"
-             class="text-gray-900 hover:text-gray-600 transition-colors">
+             class="hover:text-gray-600 transition-colors">
             {{ article.title }}
           </a>
-          <span class="text-gray-400">
-            · {{ article.platform_name }}
-            · {{ article.date_added|date:"M j, Y" }}
-          </span>
+          {% if article.published_at %}
+          <span class="text-gray-400"> {{ article.published_at|date:"M j, Y" }}</span>
+          {% endif %}
         </li>
         {% endfor %}
       </ul>

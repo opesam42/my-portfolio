@@ -43,14 +43,17 @@ class Project(TimeStampedModel):
         return self.name
 
 class Article(TimeStampedModel):
-    # TODO: add published_at (the date the post went live on Medium/dev.to)
-    # and use it on /blog/ instead of date_added.
     title = models.CharField(max_length=255)
     description = models.TextField()
     external_url = models.URLField(help_text="Link to the actual article")
     platform_name = models.CharField(max_length=50,)
     cover_image = models.ImageField(upload_to='articles/', blank=True)
     order = models.PositiveIntegerField(default=0, db_index=True)
+    published_at = models.DateField(null=True, blank=True)
+
+    @property
+    def published_year(self):
+        return self.published_at.year if self.published_at else None
 
     def __str__(self):
         return self.title

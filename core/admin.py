@@ -10,5 +10,5 @@ class ProjectAdmin(admin.ModelAdmin):
 
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
-    list_display = ("title", "order", "date_added", "is_visible")
-    ordering = ("order",)
+    list_display = ("title", "order", "published_at", "is_visible")
+    ordering = ("-published_at", "order")

@@ -1,3 +1,4 @@
+from django.db.models import F
 from django.shortcuts import render
 from django.views.generic import TemplateView
 from django.http import HttpResponse
@@ -22,8 +23,10 @@ class BlogView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # TODO: order by a dedicated published_at field once articles store the real post date.
-        context['articles'] = Article.objects.filter(is_visible=True).order_by('-date_added', 'order')
+        context['articles'] = (
+            Article.objects.filter(is_visible=True)
+            .order_by(F('published_at').desc(nulls_last=True), 'order')
+        )
         return context
 
 
